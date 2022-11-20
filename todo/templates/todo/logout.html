@@ -1,0 +1,10 @@
+{% extends 'todo/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container center col-md-6 mt-4">
+        <h4 class="center text-muted text-dark">Succesfully Logged Out!!</h4>
+    </div>
+    <div class="container">
+        <a href="{% url 'login' %}" class="link">Login</a>
+    </div>
+{% endblock %}

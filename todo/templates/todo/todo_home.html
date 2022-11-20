@@ -1,0 +1,68 @@
+{% extends 'todo/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container my-4 d-inline-block" onload="realtimeClock()">           
+                <div id="todaysdate"></div>
+                <div id="clock"></div>         
+    </div>
+
+    <div class="container  mt-4">
+        <div class="row d-flex">
+            <!-- DAILY TO-DO -->
+            <div class="container col-6 bg-primary py-4">
+                <h4 class="text-white">TODAY'S TASKS</h4>
+                <ol class="list-group list-group-numbered">
+                    {% if todos %}
+                    <!-- Loop Starts Here-->
+                    {% for todo in todos %}
+                        {% if todo.creator == user %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start mt-1">
+                            <div class="ms-2 me-auto">
+                              <div class="fw-bold font-weight-bold">{{ todo.todoname }}</div>
+                            </div>
+                            <span class="rounded-pill">
+                            <a href="{% url 'edit-task' todo.id %}" class="link text-dark">Edit</a>
+                            <a href="{% url 'remove-task' todo.id %}" class="link text-danger">Remove</a>
+                          </span>
+                          </li>
+                        {% endif %}
+                    {% endfor %}
+                    <!-- Loop Ends Here-->
+                    {% else %}
+                        <p class="text-white">No Tasks. You can add a Task By Clicking The Button Below.</p>
+                    {% endif %}
+                </ol>
+                <a class="btn btn-dark mt-2" href="{% url 'add-task' %}">Add Task</a>
+            </div>
+            <!-- // DAILY TO-DO -->
+
+            <!-- UPCOMING -->
+            <div class="container col-5 bg-warning py-4 ml-auto">
+                <h4 class="text-white">UPCOMING</h4>
+                <ol class="list-group list-group-numbered">
+                    {% if events %}
+                    <!-- Loop Starts Here-->
+                    {% for event in events %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start mt-1">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold font-weight-bold">{{ event.eventname }}</div>
+                      </div>
+                      <span class="rounded-pill">
+                      <a href="{% url 'edit-event' event.id %}" class="link text-dark">Edit</a>
+                      <a href="{% url 'remove-event' event.id %}" class="link text-danger">Remove</a>
+                    </span>
+                    </li>
+                    {% endfor %}
+                    <!-- Loop Ends Here-->
+                    {% else %}
+                        <p class="text-dark">No Upcoming Events. You can add An Event By Clicking The Button Below.</p>
+                    {% endif %}
+                </ol>
+                <a href="{% url 'add-event' %}" class="btn btn-dark mt-2">Add To List</a>
+            </div>
+            <!-- // UPCOMING -->
+        </div>
+    </div>
+
+    <script src="{% static 'todo/js/main.js' %}"></script>
+{% endblock %}
